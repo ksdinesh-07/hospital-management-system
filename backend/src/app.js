@@ -2,6 +2,7 @@ import express from "express"
 import cors from 'cors'
 import auth_route from "./routes/auth.routes.js"
 import test_route from "./routes/test.routes.js"
+import doctor_route from "./routes/doctor.routes.js"
 
 const app=express()
 
@@ -17,6 +18,9 @@ app.get('/',(req,res)=>{
 
 app.use("/api/v1/auth", auth_route);
 app.use("/api/v1/test",test_route);
+
+//doctor
+app.use("/api/v1/doctors",doctor_route);
 
 
 export default app
