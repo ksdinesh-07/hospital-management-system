@@ -113,3 +113,14 @@ export const updated_doctor_service=async (doctor_id,doctor_data) => {
 
   return fully_update_doctor;
 }
+
+export const delete_doctor_service=async (doctor_id)=>{
+  const doctor =await Doctor.findById(doctor_id);
+  if (!doctor){
+    throw new Error("Doctor not found");
+  }
+  await Doctor.findByIdAndDelete(doctor_id)
+  await User.findByIdAndDelete(doctor.user)
+
+  return;
+}
