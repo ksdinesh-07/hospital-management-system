@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import User from "../models/user.model.js"
-import doctor from "../models/doctor.models.js"
+import Doctor from "../models/doctor.models.js"
 
 export const create_doctor_service=async (doctor_data)=>{
   const existing_user=await User.findOne({
@@ -21,7 +21,7 @@ export const create_doctor_service=async (doctor_data)=>{
     role:"doctor"
   })
 
-  const new_doctor = await doctor.create({
+  const new_doctor = await Doctor.create({
     user:new_user._id,
     specialization:doctor_data.specialization,
     qualification:doctor_data.qualification,
@@ -41,6 +41,14 @@ export const create_doctor_service=async (doctor_data)=>{
 }
 
 export const get_all_doctors_services=async (req,res)=>{
-  const doctors=await doctor.find().populate("user","-password");
+  const doctors=await Doctor.find().populate("user","-password");
   return doctors;
+}
+
+export const get_doctor_by_id_service=async (doctor_id)=>{
+  const doctor = await Doctor.findById(doctor_id).populate("user","-password");
+  if (!doctor){
+    throw new Error("Doctor not found");
+  }
+  return doctor;
 }
