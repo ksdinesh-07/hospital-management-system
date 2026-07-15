@@ -1,4 +1,4 @@
-import {create_doctor_service} from "../services/doctor.service.js"
+import {create_doctor_service,get_all_doctors_services} from "../services/doctor.service.js"
 
 export const create_doctor=async(req,res)=>{
   try{
@@ -8,5 +8,14 @@ export const create_doctor=async(req,res)=>{
 
   }catch(err){
     res.status(400).json({success:false,message:err.message})
+  }
+}
+
+export const get_all_doctors=async (req,res)=>{
+  try{
+    const doctors=await get_all_doctors_services()
+    return res.status(200).json({success:true,message:"Doctors fetched successfully",data:doctors})
+  }catch(err){
+    return res.status(403).json({success:false,message:err.message})
   }
 }

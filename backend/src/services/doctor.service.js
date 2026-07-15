@@ -39,3 +39,8 @@ export const create_doctor_service=async (doctor_data)=>{
     doctor:new_doctor
   }
 }
+
+export const get_all_doctors_services=async (req,res)=>{
+  const doctors=await doctor.find().populate("user","-password");
+  return doctors;
+}
