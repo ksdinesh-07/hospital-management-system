@@ -52,3 +52,64 @@ export const get_doctor_by_id_service=async (doctor_id)=>{
   }
   return doctor;
 }
+
+export const updated_doctor_service=async (doctor_id,doctor_data) => {
+  const doctor=await Doctor.findById(doctor_id);
+  if (!doctor){
+    throw new Error("Doctor not found");
+  }
+  const user_update={};
+  if (doctor_data.fullname){
+    user_update.fullname=doctor_data.fullname;
+  }
+  if (doctor_data.phone){
+    user_update.phone=doctor_data.phone;
+  }
+  if (doctor_data.address){
+    user_update.address=doctor_data.address;
+  }
+  
+  if (Object.keys(user_update).length>0){
+    await User.findByIdAndUpdate(
+      doctor.user,
+      user_update,
+      {new:true}
+    );
+  }
+
+  const doctor_update={}
+
+  if (doctor_data.specialization){
+    doctor_update.specialization=doctor_data.specialization
+  }
+  if (doctor_data.qualification){
+    doctor_update.qualification=doctor_data.qualification
+  }
+  if (doctor_data.experience!==undefined){
+    doctor_update.experience=doctor_data.experience
+  }
+  if (doctor_data.consultationFee !== undefined){
+    doctor_update.consultationFee = doctor_data.consultationFee;
+  }
+  if (doctor_data.availableDays){
+    doctor_update.availableDays = doctor_data.availableDays;
+  }
+  if (doctor_data.availableTime){
+    doctor_update.availableTime = doctor_data.availableTime;
+  }
+  if (doctor_data.isAvailable !== undefined){
+    doctor_update.isAvailable = doctor_data.isAvailable;
+  }
+
+  if (Object.keys(doctor_update).length>0){
+    await Doctor.findByIdAndUpdate(
+      doctor_id,
+      doctor_update,
+      {new:true}
+    );
+  }
+
+  const fully_update_doctor=await Doctor.findById(doctor_id).populate("user","-password");
+
+  return fully_update_doctor;
+}
