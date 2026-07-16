@@ -39,3 +39,95 @@ const new_patient = await Patient.create({
     patient:new_patient
   }
 }
+
+export const get_all_patient_service=async (req,res)=>{
+  const patients=await Patient.find().populate("user","-password");
+  return patients;
+}
+
+export const get_patient_by_id_service=async (patient_id)=>{
+  const patient=await Patient.findById(patient_id).populate("user","-password");
+  if (!patient){
+    throw new Error("Patient doesnot exists")
+  }
+  return patient;
+}
+
+export const update_patient_service=async (patient_id,patient_data)=>{
+  const patient=await Patient.findById(patient_id)
+  if(!patient){
+    throw new Error("Patient not found")
+  }
+  const user_update={};
+  if (patient_data.fullname){
+    user_update.fullname=patient_data.fullname
+  }
+  if (patient_data.phone){
+    user_update.phone=patient_data.phone
+  }
+  if (patient_data.address){
+    user_update.address=patient_data.address
+  }
+  if (Object.keys(user_update).length>0){
+    await User.findByIdAndUpdate(
+      patient.user,
+      user_update,
+      {new:true}
+    )};
+  
+  const patient_update = {};
+
+  if (patient_data.gender) {
+    patient_update.gender = patient_data.gender;
+  }
+
+  if (patient_data.date_of_birth) {
+    patient_update.date_of_birth = patient_data.date_of_birth;
+  }
+
+  if (patient_data.blood_group) {
+    patient_update.blood_group = patient_data.blood_group;
+  }
+
+  if (patient_data.height !== undefined) {
+    patient_update.height = patient_data.height;
+  }
+
+  if (patient_data.weight !== undefined) {
+    patient_update.weight = patient_data.weight;
+  }
+
+  if (patient_data.emergency_contact) {
+    patient_update.emergency_contact = patient_data.emergency_contact;
+  }
+
+  if (patient_data.allergies) {
+    patient_update.allergies = patient_data.allergies;
+  }
+
+  if (patient_data.medical_history) {
+    patient_update.medical_history = patient_data.medical_history;
+  }
+
+  if(Object.keys(patient_update).length>0){
+    await Patient.findByIdAndUpdate(
+      patient_id,
+      patient_update,
+      {new:true}
+    )};
+  
+  const fully_updated_patient=await Patient.findById(patient_id).populate("user","-password");
+  return fully_updated_patient;
+
+}
+
+export const delete_patient_service=async (patient_id)=>{
+  const patient=await Patient.findById(patient_id)
+  if(!patient){
+    throw new Error("patient not found")
+  }
+  await User.findByIdAndDelete(patient.user)
+  await Patient.findByIdAndDelete(patient_id)
+
+  return ;
+}
