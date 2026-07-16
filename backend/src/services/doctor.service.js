@@ -40,7 +40,7 @@ export const create_doctor_service=async (doctor_data)=>{
   }
 }
 
-export const get_all_doctors_services=async (req,res)=>{
+export const get_all_doctors_services=async ()=>{
   const doctors=await Doctor.find().populate("user","-password");
   return doctors;
 }

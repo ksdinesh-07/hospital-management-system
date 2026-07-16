@@ -24,3 +24,22 @@ export const create_appointment_service=async(appointment_details)=>{
 
   return new_appointment;
 }
+
+export const get_all_appointments_service=async ()=>{
+  const result=await Appointment.find()
+  .populate({
+    path:"patient",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  })
+  .populate({
+    path:"doctor",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  });
+  return result;
+}
