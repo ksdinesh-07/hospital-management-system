@@ -60,3 +60,9 @@ http://localhost:5000/api/v1/patients/<patient_id>
 
 AUTHENTICATION BEARER -........
 
+11. POST -BOOKING AN APPOINTMENT
+
+http://localhost:5000/api/v1/appointments
+
+AUTHENTICATION BEARER -........
+

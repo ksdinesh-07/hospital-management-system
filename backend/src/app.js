@@ -4,6 +4,7 @@ import auth_route from "./routes/auth.routes.js"
 import test_route from "./routes/test.routes.js"
 import doctor_route from "./routes/doctor.routes.js"
 import patient_route from "./routes/patient.routes.js"
+import appointment_route from "./routes/appointment.routes.js"
 
 const app=express()
 
@@ -24,6 +25,9 @@ app.use("/api/v1/test",test_route);
 app.use("/api/v1/doctors",doctor_route);
 
 //patient
-app.use("/api/v1/patients",patient_route)
+app.use("/api/v1/patients",patient_route);
 
-export default app
+//appointment
+app.use("/api/v1/appointments",appointment_route);
+
+export default app;
