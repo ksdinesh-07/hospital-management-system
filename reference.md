@@ -66,3 +66,26 @@ http://localhost:5000/api/v1/appointments
 
 AUTHENTICATION BEARER -........
 
+12. GET - GET ALL APPOINTMENTS
+
+http://localhost:5000/api/v1/appointments
+
+AUTHENTICATION BEARER -........
+
+13. GET - GET ALL APPOINTMENTS BY ID
+
+http://localhost:5000/api/v1/appointments/6a58803057897c58faa89039
+
+AUTHENTICATION BEARER -........
+
+14. PUT  - UPDATE APPOINTMENT
+
+http://localhost:5000/api/v1/appointments/6a58803057897c58faa89039
+
+AUTHENTICATION BEARER -........
+
+15. PATCH - SOFT DELETE APPOINTMENT
+
+http://localhost:5000/api/v1/appointments/6a58803057897c58faa89039/cancel
+
+AUTHENTICATION BEARER -........

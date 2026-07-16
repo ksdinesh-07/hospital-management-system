@@ -43,3 +43,96 @@ export const get_all_appointments_service=async ()=>{
   });
   return result;
 }
+
+export const get_appointment_by_id_service=async (appointment_id)=>{
+  const result=await Appointment.findById(appointment_id)
+  .populate({
+    path:"patient",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  })
+  .populate({
+    path:"doctor",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  });
+  return result;
+}
+
+export const update_appointment_service=async (appointment_id,appointment_data)=>{
+  const result=await Appointment.findById(appointment_id)
+  if(!result){
+    throw new Error("appointment not found")
+  }
+  const appointment_update={};
+
+if (appointment_data.appointment_date) {
+    appointment_update.appointment_date = appointment_data.appointment_date;
+  }
+
+  if (appointment_data.appointment_time) {
+    appointment_update.appointment_time = appointment_data.appointment_time;
+  }
+
+  if (appointment_data.reason) {
+    appointment_update.reason = appointment_data.reason;
+  }
+
+  if (appointment_data.status) {
+    appointment_update.status = appointment_data.status;
+  }
+
+  if (appointment_data.notes) {
+    appointment_update.notes = appointment_data.notes;
+  }
+
+  await Appointment.findByIdAndUpdate(
+    appointment_id,appointment_update,{new:true});
+
+  const updated_appointment=await Appointment.findById(appointment_id)
+  .populate({
+    path:"patient",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  })
+  .populate({
+    path:"doctor",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  });
+  return updated_appointment;
+}
+
+export const cancel_appointment_service=async (appointment_id)=>{
+  const appointment=await Appointment.findById(appointment_id)
+
+  if (!appointment){
+    throw new Error('Appointment not found')
+  }
+  appointment.status="Cancelled"
+  await appointment.save();
+
+  return await Appointment.findById(appointment_id)
+  .populate({
+    path:"patient",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  })
+  .populate({
+    path:"doctor",
+    populate:{
+      path:"user",
+      select:"-password"
+    }
+  })
+}
