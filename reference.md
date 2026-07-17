@@ -93,3 +93,16 @@ AUTHENTICATION BEARER -........
 16. GET - GET DASHBOARD STATISTIC
 
 http://localhost:5000/api/v1/dashboard/stats
+
+17. GET -FILTER BY SPECIALIZATION
+
+http://localhost:5000/api/v1/doctors?specialization=Cardiology
+
+18. GET-FILTER BY AVAILABILTITY
+
+GET http://localhost:5000/api/v1/doctors?isAvailable=true
+
+19. GET-BILTER BY SPECIALIZATION AND AVAILABILITY
+
+GET http://localhost:5000/api/v1/doctors?specialization=Cardiology&isAvailable=true
+

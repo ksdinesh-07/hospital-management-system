@@ -40,8 +40,15 @@ export const create_doctor_service=async (doctor_data)=>{
   }
 }
 
-export const get_all_doctors_services=async ()=>{
-  const doctors=await Doctor.find().populate("user","-password");
+export const get_all_doctors_services=async (query)=>{
+  const filter={};
+  if (query.specialization){
+    filter.specialization=query.specialization
+  }
+  if(query.isAvailable){
+    filter.isAvailable=query.specialization==="true";
+  }
+  const doctors=await Doctor.find(filter).populate("user","-password");
   return doctors;
 }
 
