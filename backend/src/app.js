@@ -33,5 +33,10 @@ app.use("/api/v1/appointments",appointment_route);
 //dashboard
 app.use("/api/v1/dashboard",dashboard_routes);
 
+//express extended query parser
+app.set("query parser","extended");
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
+
 
 export default app;

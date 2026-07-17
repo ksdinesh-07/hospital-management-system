@@ -177,3 +177,55 @@ http://localhost:5000/api/v1/patients?gender=Male&page=1&limit=2
 30. GET -COMBINE FILTER + SORT + PAGINATION
 
 http://localhost:5000/api/v1/patients?gender=Male&sort=-createdAt&page=1&limit=2
+
+31. GET -PAGINATION FOR APPOINTMENTS
+
+http://localhost:5000/api/v1/appointments?page=1&limit=2
+
+32. GET - SORT BY APPOINTMENT DATE
+
+http://localhost:5000/api/v1/appointments?sort=-appointment_date
+
+33. GET - FILTER BY STATUS
+
+http://localhost:5000/api/v1/appointments?status=Scheduled
+
+34. GET -FILTRE BY DOCTOR
+
+http://localhost:5000/api/v1/appointments?doctor=YOUR_DOCTOR_ID
+
+http://localhost:5000/api/v1/appointments?doctor=6a567e0fb7c8cb6d38715a5e
+
+35. GET -FILTER BY PATIENT
+
+http://localhost:5000/api/v1/appointments?patient=6a567e0fb7c8cb6d38715a5e
+
+36. GET -COMBINE STATUS + SORT + PAGE AND LIMIT 
+
+GET http://localhost:5000/api/v1/appointments?status=Scheduled&sort=-appointment_date&page=1&limit=5
+
+37. GET - FEE GREATER THAN 500
+
+http://localhost:5000/api/v1/doctors?consultationFee[gte]=500
+
+38. GET - EXPERIENCE GREATER THAN OR EQUAL TO 8
+
+http://localhost:5000/api/v1/doctors?experience[gte]=8
+
+39. GET -FEE LESS THAN OR EQUAL TO 700
+
+http://localhost:5000/api/v1/doctors?consultationFee[lte]=700
+
+40. GET - EXPERIENCE BETWEEN 5 AND 10 
+
+http://localhost:5000/api/v1/doctors?experience[gte]=5&experience[lte]=10
+
+http://localhost:5000
+
+41. GET - COMBINED FILTERS WITH SORTING AND PAGINATION 
+
+http://localhost:5000/api/v1/doctors?experience[gte]=5&consultationFee[lte]=700&sort=-experience&page=1&limit=5
+
+42. GET - IMPLEMENT DOCTOR SEARCH
+
+http://localhost:5000/api/v1/doctors?search=Dr. Priya Sharmahttp://localhost:5000/api/v1/doctors?search=Dr. Priya Sharma

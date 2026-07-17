@@ -24,6 +24,7 @@ export const create_doctor_service=async (doctor_data)=>{
 
   const new_doctor = await Doctor.create({
     user:new_user._id,
+    doctor_name:new_user.fullname,
     specialization:doctor_data.specialization,
     qualification:doctor_data.qualification,
     experience:doctor_data.experience,
@@ -111,6 +112,9 @@ export const updated_doctor_service=async (doctor_id,doctor_data) => {
 
   const doctor_update={}
 
+  if (doctor_data.fullname){
+    doctor_update.doctor_name=doctor_data.fullname
+  }
   if (doctor_data.specialization){
     doctor_update.specialization=doctor_data.specialization
   }

@@ -11,7 +11,7 @@ export const create_appointment=async (req,res)=>{
 
 export const get_all_appointments=async (req,res)=>{
   try{
-    const result=await get_all_appointments_service();
+    const result=await get_all_appointments_service(req.query);
     return res.status(201).json({success:true,message:"Appointments fetched successfully",details:result})  
   }catch(err){
     return res.status(400).json({success:false,message:err.message})

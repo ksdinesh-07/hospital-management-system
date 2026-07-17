@@ -43,6 +43,7 @@ const new_patient = await Patient.create({
 
 export const get_all_patient_service=async (query)=>{
   //const patients=await Patient.find().populate("user","-password");
+  console.log(await Patient.countDocuments())
   const feature =new API_feature(Patient,query)
   return await feature.execute({
     path:"user",

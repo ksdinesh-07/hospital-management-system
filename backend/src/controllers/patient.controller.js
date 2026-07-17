@@ -12,7 +12,7 @@ export const create_patient =async (req,res)=>{
 
 export const get_all_patient=async (req,res)=>{
   try{
-    const result=await get_all_patient_service(req.body);
+    const result=await get_all_patient_service(req.query);
     return res.status(200).json({success:true,message:"Patients fetched successfully",data:result})
 
   }catch(err){

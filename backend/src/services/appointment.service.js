@@ -26,23 +26,25 @@ export const create_appointment_service=async(appointment_details)=>{
   return new_appointment;
 }
 
-export const get_all_appointments_service=async ()=>{
-  const result=await Appointment.find()
-  .populate({
-    path:"patient",
-    populate:{
-      path:"user",
-      select:"-password"
+export const get_all_appointments_service=async (query)=>{
+
+  const feature=new API_feature(Appointment,query);
+  return await feature.execute([
+    {
+      path:"patient",
+      populate:{
+        path:"user",
+        select:"-password"
+     }
+    },
+    {
+      path:"doctor",
+      populate:{
+        path:"user",
+        select:"-password"
+      }
     }
-  })
-  .populate({
-    path:"doctor",
-    populate:{
-      path:"user",
-      select:"-password"
-    }
-  });
-  return result;
+  ]);
 }
 
 export const get_appointment_by_id_service=async (appointment_id)=>{

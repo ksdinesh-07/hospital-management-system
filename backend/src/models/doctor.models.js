@@ -7,6 +7,11 @@ const doctor_schema=new mongoose.Schema({
       required:true,
       unique:true
     },
+    doctor_name:{
+      type:String,
+      required:true,
+      trim:true
+    },
     specialization: {
       type: String,
       required: true,
