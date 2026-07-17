@@ -89,3 +89,7 @@ AUTHENTICATION BEARER -........
 http://localhost:5000/api/v1/appointments/6a58803057897c58faa89039/cancel
 
 AUTHENTICATION BEARER -........
+
+16. GET - GET DASHBOARD STATISTIC
+
+http://localhost:5000/api/v1/dashboard/stats

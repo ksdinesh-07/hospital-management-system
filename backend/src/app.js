@@ -5,7 +5,7 @@ import test_route from "./routes/test.routes.js"
 import doctor_route from "./routes/doctor.routes.js"
 import patient_route from "./routes/patient.routes.js"
 import appointment_route from "./routes/appointment.routes.js"
-
+import dashboard_routes from "./routes/dashboard.routes.js"
 const app=express()
 
 
@@ -29,5 +29,9 @@ app.use("/api/v1/patients",patient_route);
 
 //appointment
 app.use("/api/v1/appointments",appointment_route);
+
+//dashboard
+app.use("/api/v1/dashboard",dashboard_routes);
+
 
 export default app;
