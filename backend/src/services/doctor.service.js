@@ -48,10 +48,24 @@ export const get_all_doctors_services=async (query)=>{
   if(query.isAvailable){
     filter.isAvailable=query.specialization==="true";
   }
-  const doctors=await Doctor.find(filter).populate("user","-password");
-  return doctors;
-}
 
+  //pagination 
+  const page=Number(query.page) || 1;
+  const limit=Number(query.limit) || 5;
+  const skip=(page-1)*limit;
+  const total_doctors=await Doctor.countDocuments(filter);
+
+
+
+  const doctors=await Doctor.find(filter).populate("user","-password").skip(skip).limit(limit);
+
+  return {
+    current_page:page,
+    total_pages:Math.ceil(total_doctors/limit),
+    total_doctors,
+    doctors
+}
+};
 export const get_doctor_by_id_service=async (doctor_id)=>{
   const doctor = await Doctor.findById(doctor_id).populate("user","-password");
   if (!doctor){

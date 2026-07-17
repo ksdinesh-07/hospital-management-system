@@ -100,9 +100,16 @@ http://localhost:5000/api/v1/doctors?specialization=Cardiology
 
 18. GET-FILTER BY AVAILABILTITY
 
-GET http://localhost:5000/api/v1/doctors?isAvailable=true
+http://localhost:5000/api/v1/doctors?isAvailable=true
 
-19. GET-BILTER BY SPECIALIZATION AND AVAILABILITY
+19. GET-FILTER BY SPECIALIZATION AND AVAILABILITY
 
-GET http://localhost:5000/api/v1/doctors?specialization=Cardiology&isAvailable=true
+http://localhost:5000/api/v1/doctors?specialization=Cardiology&isAvailable=true
 
+20. GET -PAGINATION FIRST PAGE.....
+
+http://localhost:5000/api/v1/doctors?page=1&limit=2
+
+21. GET -COMBINED FILTER AND THE PAGINATION 
+
+http://localhost:5000/api/v1/doctors?specialization=Cardiology&page=1&limit=2
