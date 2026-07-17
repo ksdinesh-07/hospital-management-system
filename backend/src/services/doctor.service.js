@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import User from "../models/user.model.js"
 import Doctor from "../models/doctor.models.js"
+import API_feature from "../utils/apiFeatures.js"
 
 export const create_doctor_service=async (doctor_data)=>{
   const existing_user=await User.findOne({
@@ -41,31 +42,41 @@ export const create_doctor_service=async (doctor_data)=>{
 }
 
 export const get_all_doctors_services=async (query)=>{
-  const filter={};
-  if (query.specialization){
-    filter.specialization=query.specialization
-  }
-  if(query.isAvailable){
-    filter.isAvailable=query.specialization==="true";
-  }
 
-  //pagination 
-  const page=Number(query.page) || 1;
-  const limit=Number(query.limit) || 5;
-  const skip=(page-1)*limit;
-  const total_doctors=await Doctor.countDocuments(filter);
+//   //filter
+//   const filter={};
+//   if (query.specialization){
+//     filter.specialization=query.specialization
+//   }
+//   if(query.isAvailable){
+//     filter.isAvailable=query.specialization==="true";
+//   }
 
+//   //pagination 
+//   const page=Number(query.page) || 1;
+//   const limit=Number(query.limit) || 5;
+//   const skip=(page-1)*limit;
+//   const total_doctors=await Doctor.countDocuments(filter);
 
+//   //sorting 
+//   const sort_field=query.sort 
 
-  const doctors=await Doctor.find(filter).populate("user","-password").skip(skip).limit(limit);
+//   const doctors=await Doctor.find(filter).populate("user","-password").skip(skip).limit(limit).sort(sort_field);
 
-  return {
-    current_page:page,
-    total_pages:Math.ceil(total_doctors/limit),
-    total_doctors,
-    doctors
+//   return {
+//     current_page:page,
+//     total_pages:Math.ceil(total_doctors/limit),
+//     total_doctors,
+//     doctors
+// }
+
+//using the util 
+    const feature =new API_feature(Doctor,query);
+    return await feature.execute({
+      path:"user",
+      select:"-password"
+    });
 }
-};
 export const get_doctor_by_id_service=async (doctor_id)=>{
   const doctor = await Doctor.findById(doctor_id).populate("user","-password");
   if (!doctor){

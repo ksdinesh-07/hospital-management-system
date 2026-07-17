@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import User from "../models/user.model.js"
 import Patient from "../models/patient.model.js"
+import API_feature from "../utils/apiFeatures.js"
 
 export const create_patient_service=async(patient_data)=>{
   const existing_user=await User.findOne({email:patient_data.email});
@@ -40,9 +41,13 @@ const new_patient = await Patient.create({
   }
 }
 
-export const get_all_patient_service=async (req,res)=>{
-  const patients=await Patient.find().populate("user","-password");
-  return patients;
+export const get_all_patient_service=async (query)=>{
+  //const patients=await Patient.find().populate("user","-password");
+  const feature =new API_feature(Patient,query)
+  return await feature.execute({
+    path:"user",
+    select:"-password"
+  })
 }
 
 export const get_patient_by_id_service=async (patient_id)=>{

@@ -1,6 +1,7 @@
 import Patient from "../models/patient.model.js";
 import Doctor from "../models/doctor.models.js";
 import Appointment from "../models/appointment.model.js";
+import API_feature from "../utils/apiFeatures.js";
 
 export const create_appointment_service=async(appointment_details)=>{
   const patient_details=await Patient.findById(appointment_details.patient);

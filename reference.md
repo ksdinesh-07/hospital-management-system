@@ -113,3 +113,67 @@ http://localhost:5000/api/v1/doctors?page=1&limit=2
 21. GET -COMBINED FILTER AND THE PAGINATION 
 
 http://localhost:5000/api/v1/doctors?specialization=Cardiology&page=1&limit=2
+
+22. GET -SORT  
+
+a => BY EXPERIENCE 
+
+(ascending)
+http://localhost:5000/api/v1/doctors?sort=experience
+
+(decending)
+http://localhost:5000/api/v1/doctors?sort=-experience
+
+b => BY CONSULTATION FEE
+
+(ascending)
+http://localhost:5000/api/v1/doctors?sort=consultationFee
+
+(decending)
+http://localhost:5000/api/v1/doctors?sort=-consultationFee
+
+23.  GET - COMBINED FILTER,PAGINATION AND SORT
+
+http://localhost:5000/api/v1/doctors?specialization=Cardiology&isAvailable=true&page=1&limit=5&sort=-experience
+
+24. GET -FIRST PAGE (patient)
+
+page 1
+http://localhost:5000/api/v1/patients?page=1&limit=2
+
+page2
+http://localhost:5000/api/v1/patients?page=2&limit=2
+
+25. GET -SORT BY CREATION DATE
+
+(oldest first)
+http://localhost:5000/api/v1/patients?sort=createdAt
+
+(newest first)
+http://localhost:5000/api/v1/patients?sort=createdAt
+
+26. GET -FILTER BY GENDER
+
+(male)
+http://localhost:5000/api/v1/patients?gender=Male
+
+(female)
+http://localhost:5000/api/v1/patients?gender=Female
+
+27. GET -FILTER BY BLOOD GROUP
+
+http://localhost:5000/api/v1/patients?blood_group=O+
+
+http://localhost:5000/api/v1/patients?blood_group=B+
+
+28. GET -COMBINED FILTERS
+
+http://localhost:5000/api/v1/patients?gender=Male&blood_group=B+
+
+29. GET -COMBINE FILTER + PAGINATION
+
+http://localhost:5000/api/v1/patients?gender=Male&page=1&limit=2
+
+30. GET -COMBINE FILTER + SORT + PAGINATION
+
+http://localhost:5000/api/v1/patients?gender=Male&sort=-createdAt&page=1&limit=2
