@@ -228,4 +228,69 @@ http://localhost:5000/api/v1/doctors?experience[gte]=5&consultationFee[lte]=700&
 
 42. GET - IMPLEMENT DOCTOR SEARCH
 
-http://localhost:5000/api/v1/doctors?search=Dr. Priya Sharmahttp://localhost:5000/api/v1/doctors?search=Dr. Priya Sharma
+http://localhost:5000/api/v1/doctors?search=Dr. Priya Sharma
+
+
+//ADVANCE FILTERING
+
+43. GET -DOCTORS WITH EXPERIENCE 
+
+http://localhost:5000/api/v1/doctors?experience[gt]=8
+ 
+http://localhost:5000/api/v1/doctors?experience[gte]=8
+
+http://localhost:5000/api/v1/doctors?experience[lt]=10
+
+http://localhost:5000/api/v1/doctors?experience[lte]=10
+
+http://localhost:5000/api/v1/doctors?experience[gte]=8&experience[lte]=10
+
+http://localhost:5000/api/v1/doctors?consultationFee[gte]=600&consultationFee[lte]=900
+
+http://localhost:5000/api/v1/doctors?search=John&experience[gte]=8
+
+http://localhost:5000/api/v1/doctors?search=John&experience[gte]=8&sort=-experience&page=1&limit=5
+
+44. PATIENT ADVANCE FILTERING
+
+http://localhost:5000/api/v1/patients?height[gt]=160
+
+http://localhost:5000/api/v1/patients?height[gte]=160
+
+http://localhost:5000/api/v1/patients?weight[lt]=70
+
+http://localhost:5000/api/v1/patients?weight[lte]=70
+
+http://localhost:5000/api/v1/patients?height[gte]=160&height[lte]=175
+
+http://localhost:5000/api/v1/patients?search=Priya&gender=Female
+
+http://localhost:5000/api/v1/patients?blood_group=O%2B
+
+http://localhost:5000/api/v1/patients?height[gte]=165
+
+http://localhost:5000/api/v1/patients?search=Priya&gender=Female&blood_group=B%2B&height[gte]=150&weight[lte]=60&page=1&limit=5&sort=-createdAt
+
+44. GET -APPOINTMENT ADVANCE FILTER
+
+http://localhost:5000/api/v1/appointments
+
+http://localhost:5000/api/v1/appointments?page=1&limit=5
+
+http://localhost:5000/api/v1/appointments?sort=-createdAt
+
+http://localhost:5000/api/v1/appointments?sort=appointment_date
+
+http://localhost:5000/api/v1/appointments?status=Cancelled
+
+http://localhost:5000/api/v1/appointments?status=Confirmed
+
+http://localhost:5000/api/v1/appointments?status=Completed
+
+http://localhost:5000/api/v1/appointments?appointment_date[gte]=2026-07-20
+
+http://localhost:5000/api/v1/appointments?doctor=6a587dcded578692c5dae269
+
+http://localhost:5000/api/v1/appointments?patient=6a587de3ed578692c5dae26f
+
+http://localhost:5000/api/v1/appointments?patient=6a587de3ed578692c5dae26f

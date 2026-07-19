@@ -8,6 +8,11 @@ const patient_schema=new mongoose.Schema({
         required:true,
         unique:true
       },
+      patient_name:{
+        type:String,
+        required:true,
+        trim:true
+      },
       gender: {
         type: String,
         required: true,

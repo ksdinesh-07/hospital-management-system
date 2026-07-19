@@ -22,6 +22,7 @@ export const create_patient_service=async(patient_data)=>{
 
 const new_patient = await Patient.create({
   user: new_user._id,
+  patient_name:new_user.fullname,
   gender: patient_data.gender,
   date_of_birth: patient_data.date_of_birth,
   blood_group: patient_data.blood_group,
@@ -42,13 +43,16 @@ const new_patient = await Patient.create({
 }
 
 export const get_all_patient_service=async (query)=>{
+ 
+  console.log(await Patient.find().select("patient_name gender blood_group").lean());
+  
   //const patients=await Patient.find().populate("user","-password");
-  console.log(await Patient.countDocuments())
   const feature =new API_feature(Patient,query)
   return await feature.execute({
     path:"user",
     select:"-password"
-  })
+  },
+  "patient_name")
 }
 
 export const get_patient_by_id_service=async (patient_id)=>{
@@ -79,12 +83,15 @@ export const update_patient_service=async (patient_id,patient_data)=>{
       patient.user,
       user_update,
       {new:true}
-    )};
+    )};                                                                             
   
   const patient_update = {};
 
   if (patient_data.gender) {
-    patient_update.gender = patient_data.gender;
+    patient_update.gender = patient_data.gender;                                                                                                                                                                                                                                                                                                                                                                  
+  }
+  if (patient_data.fullname){
+    patient_update.patient_name=patient_data.fullname;
   }
 
   if (patient_data.date_of_birth) {

@@ -73,10 +73,12 @@ export const get_all_doctors_services=async (query)=>{
 
 //using the util 
     const feature =new API_feature(Doctor,query);
-    return await feature.execute({
+      return await feature.execute({
       path:"user",
       select:"-password"
-    });
+    },
+  "doctor_name"
+  );
 }
 export const get_doctor_by_id_service=async (doctor_id)=>{
   const doctor = await Doctor.findById(doctor_id).populate("user","-password");

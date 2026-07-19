@@ -4,6 +4,7 @@ class API_feature{
     this.query=query;
   }
   async execute(populate=null,search_field=null){
+
     const {page=1,limit=10,sort="createdAt",search,...filters}=this.query
 
     let filter_string=JSON.stringify(filters);
@@ -11,7 +12,22 @@ class API_feature{
       match=>`$${match}`
     );
 
+    // converting string to number
     const mongoose_filter=JSON.parse(filter_string)
+
+console.log("Raw Query:", this.query);
+  console.log("Mongo Filter:", mongoose_filter);
+
+    Object.keys(mongoose_filter).forEach((field)=>{
+      if ( typeof mongoose_filter[field]==="object" && mongoose_filter[field]!==null ){
+        Object.keys(mongoose_filter[field]).forEach((operator)=>{
+          const value=mongoose_filter[field][operator];
+          if (!isNaN(value)){
+            mongoose_filter[field][operator]=Number(value)
+          }
+        });
+      }
+    });
 
     if (search && search_field){
       mongoose_filter[search_field]={
@@ -29,10 +45,10 @@ class API_feature{
     const skip=(Number(page)-1)*Number(limit)
     const total=await this.model.countDocuments(mongoose_filter)
 
+    //executing the querry
     let query=this.model.find(mongoose_filter).sort(sort).skip(skip).limit(Number(limit));
 
     if (populate){
-
       if (Array.isArray(populate)){
         populate.forEach((item)=>{
           query=query.populate(item)
@@ -41,9 +57,7 @@ class API_feature{
       query=query.populate(populate)
       }
     };
-
     const data=await query;
-
     return {
       total,
       page: Number(page),

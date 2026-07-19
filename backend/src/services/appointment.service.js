@@ -28,6 +28,10 @@ export const create_appointment_service=async(appointment_details)=>{
 
 export const get_all_appointments_service=async (query)=>{
 
+  console.log(
+  await Appointment.find().select("doctor patient status").lean()
+);
+
   const feature=new API_feature(Appointment,query);
   return await feature.execute([
     {
@@ -44,7 +48,8 @@ export const get_all_appointments_service=async (query)=>{
         select:"-password"
       }
     }
-  ]);
+  ],
+  "reason");
 }
 
 export const get_appointment_by_id_service=async (appointment_id)=>{
