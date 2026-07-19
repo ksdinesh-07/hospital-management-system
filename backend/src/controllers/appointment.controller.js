@@ -1,4 +1,4 @@
-import {create_appointment_service,get_all_appointments_service,get_appointment_by_id_service,update_appointment_service,cancel_appointment_service} from '../services/appointment.service.js'
+import {create_appointment_service,get_all_appointments_service,get_appointment_by_id_service,update_appointment_service,cancel_appointment_service,delete_appointment_service} from '../services/appointment.service.js'
 
 export const create_appointment=async (req,res)=>{
   try{
@@ -24,6 +24,16 @@ export const get_appointment_by_id=async (req,res)=>{
     return res.status(201).json({success:true,message:"Appointment fetched successfully",details:result})  
   }catch(err){
     return res.status(400).json({success:false,message:err.message})
+  }
+}
+
+export const delete_appointment=async (req,res)=>{
+  try{
+    const result=await delete_appointment_service(req.params.id);
+    return res.status(201).json({success:true,message:"Appointment deleted successfully",details:result})  
+  }catch(err){
+    return res.status(400).json({success:false,message:err.message})
+
   }
 }
 

@@ -7,4 +7,5 @@ const router=Router();
 
 router.get('/stats',authenticate_user,authorize_role("admin"),get_dashboard_stat);
 
+
 export default router;

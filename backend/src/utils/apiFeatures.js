@@ -15,8 +15,6 @@ class API_feature{
     // converting string to number
     const mongoose_filter=JSON.parse(filter_string)
 
-console.log("Raw Query:", this.query);
-  console.log("Mongo Filter:", mongoose_filter);
 
     Object.keys(mongoose_filter).forEach((field)=>{
       if ( typeof mongoose_filter[field]==="object" && mongoose_filter[field]!==null ){
