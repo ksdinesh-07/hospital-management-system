@@ -2,13 +2,14 @@ import bcrypt from "bcrypt"
 import User from "../models/user.model.js"
 import Doctor from "../models/doctor.models.js"
 import API_feature from "../utils/apiFeatures.js"
+import API_error from "../utils/api_error.js"
 
 export const create_doctor_service=async (doctor_data)=>{
   const existing_user=await User.findOne({
     email:doctor_data.email
   })
   if (existing_user){
-    throw new Error("Email already exists")
+    throw new API_error(409,"Email already exists")
   }
 
   const hashed_password=await bcrypt.hash(doctor_data.password,10);
@@ -83,7 +84,7 @@ export const get_all_doctors_services=async (query)=>{
 export const get_doctor_by_id_service=async (doctor_id)=>{
   const doctor = await Doctor.findById(doctor_id).populate("user","-password");
   if (!doctor){
-    throw new Error("Doctor not found");
+    throw new API_error(404,"Doctor not found");
   }
   return doctor;
 }
@@ -91,7 +92,7 @@ export const get_doctor_by_id_service=async (doctor_id)=>{
 export const updated_doctor_service=async (doctor_id,doctor_data) => {
   const doctor=await Doctor.findById(doctor_id);
   if (!doctor){
-    throw new Error("Doctor not found");
+    throw new API_error(404,"Doctor not found");
   }
   const user_update={};
   if (doctor_data.fullname){
@@ -155,7 +156,7 @@ export const updated_doctor_service=async (doctor_id,doctor_data) => {
 export const delete_doctor_service=async (doctor_id)=>{
   const doctor =await Doctor.findById(doctor_id);
   if (!doctor){
-    throw new Error("Doctor not found");
+    throw new API_error(404,"Doctor not found");
   }
   await Doctor.findByIdAndDelete(doctor_id)
   await User.findByIdAndDelete(doctor.user)

@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt"
 import User from "../models/user.model.js"
 import jwt from "jsonwebtoken"
+import API_error from "../utils/api_error.js"
 
 export const register_user_service=async(user_data)=>{
   //verifying the email already registered
   const existing_user=await User.findOne({email:user_data.email})
   if (existing_user){
-    throw new Error("Email already exists");
+    throw new API_error(404,"Email already exists");
   }
 
   //password hashing
@@ -35,7 +36,7 @@ export const login_user_service=async (login_data)=>{
   //finding the user using the email
   const user =await User.findOne({email:login_data.email})
   if (!user){
-    throw new Error("Invalid email or password")
+    throw new API_error(401,"Invalid email or password")
   }
 
   //compare with the stored hashed password
@@ -44,7 +45,7 @@ export const login_user_service=async (login_data)=>{
     user.password
   )
   if (!is_password_valid){
-    throw new Error("Invalid email or password")
+    throw new API_error(401,"Invalid email or password")
   }
 
   //generate the JWT
@@ -58,7 +59,6 @@ export const login_user_service=async (login_data)=>{
     expiresIn:process.env.JWT_EXPIRES_IN
   } 
   );
-  console.log("Generated Token:", token);
 
   //remove the password before sending the user details
   const user_response =user.toObject();

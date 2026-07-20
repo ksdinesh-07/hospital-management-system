@@ -2,11 +2,12 @@ import bcrypt from "bcrypt"
 import User from "../models/user.model.js"
 import Patient from "../models/patient.model.js"
 import API_feature from "../utils/apiFeatures.js"
+import API_error from "../utils/api_error.js"
 
 export const create_patient_service=async(patient_data)=>{
   const existing_user=await User.findOne({email:patient_data.email});
   if (existing_user){
-    throw new Error("Email already exists")
+    throw new API_error(409,"Email already exists")
   }
 
   const hashed_password=await bcrypt.hash(patient_data.password,10)
@@ -44,7 +45,7 @@ const new_patient = await Patient.create({
 
 export const get_all_patient_service=async (query)=>{
  
-  console.log(await Patient.find().select("patient_name gender blood_group").lean());
+  // console.log(await Patient.find().select("patient_name gender blood_group").lean());
   
   //const patients=await Patient.find().populate("user","-password");
   const feature =new API_feature(Patient,query)
@@ -58,7 +59,7 @@ export const get_all_patient_service=async (query)=>{
 export const get_patient_by_id_service=async (patient_id)=>{
   const patient=await Patient.findById(patient_id).populate("user","-password");
   if (!patient){
-    throw new Error("Patient doesnot exists")
+    throw new API_error(404,"Patient doesnot exists")
   }
   return patient;
 }
@@ -66,7 +67,7 @@ export const get_patient_by_id_service=async (patient_id)=>{
 export const update_patient_service=async (patient_id,patient_data)=>{
   const patient=await Patient.findById(patient_id)
   if(!patient){
-    throw new Error("Patient not found")
+    throw new API_error(404,"Patient not found")
   }
   const user_update={};
   if (patient_data.fullname){
@@ -137,7 +138,7 @@ export const update_patient_service=async (patient_id,patient_data)=>{
 export const delete_patient_service=async (patient_id)=>{
   const patient=await Patient.findById(patient_id)
   if(!patient){
-    throw new Error("patient not found")
+    throw new API_error(404,"patient not found")
   }
   await User.findByIdAndDelete(patient.user)
   await Patient.findByIdAndDelete(patient_id)

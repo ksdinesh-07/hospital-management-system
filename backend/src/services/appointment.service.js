@@ -2,6 +2,7 @@ import Patient from "../models/patient.model.js";
 import Doctor from "../models/doctor.models.js";
 import Appointment from "../models/appointment.model.js";
 import API_feature from "../utils/apiFeatures.js";
+import API_error from "../utils/api_error.js";
 
 export const create_appointment_service=async(appointment_details)=>{
 
@@ -15,19 +16,19 @@ export const create_appointment_service=async(appointment_details)=>{
   });
 
   if (existing_appointment){
-    throw new Error("Doctor already has an appointment at this time")
+    throw new API_error(409,"Doctor already has an appointment at this time")
   }
 
   const patient_details=await Patient.findById(appointment_details.patient);
   if (!patient_details){
-    throw new Error("Patient not found")
+    throw new API_error(404,"Patient not found")
   }
   const doctor_details=await Doctor.findById(appointment_details.doctor);
   if (!doctor_details){
-    throw new Error("Doctor not found")
+    throw new API_error(404,"Doctor not found")
   }
   if(!doctor_details.isAvailable){
-    throw new Error("Doctor is not Available");
+    throw new API_error(404,"Doctor is not Available");
   }
   const new_appointment=await Appointment.create({
     patient:appointment_details.patient,
@@ -87,7 +88,7 @@ export const get_appointment_by_id_service=async (appointment_id)=>{
 export const delete_appointment_service=async (appointment_id)=>{
   const result =await Appointment.findById(appointment_id)
   if (!result){
-    throw new Error("Appointment not found")
+    throw new API_error(404,"Appointment not found")
   }
   await Appointment.findByIdAndDelete(appointment_id);
 }
@@ -95,11 +96,11 @@ export const delete_appointment_service=async (appointment_id)=>{
 export const update_appointment_service=async (appointment_id,appointment_data)=>{
   const result=await Appointment.findById(appointment_id)
   if(!result){
-    throw new Error("Appointment not found")
+    throw new API_error(404,"Appointment not found")
   }
   const appointment_update={};
 
-if (appointment_data.appointment_date) {
+  if (appointment_data.appointment_date) {
     appointment_update.appointment_date = appointment_data.appointment_date;
   }
 
@@ -144,7 +145,7 @@ export const cancel_appointment_service=async (appointment_id)=>{
   const appointment=await Appointment.findById(appointment_id)
 
   if (!appointment){
-    throw new Error('Appointment not found')
+    throw new API_error(401,'Appointment not found')
   }
   appointment.status="Cancelled"
   await appointment.save();
