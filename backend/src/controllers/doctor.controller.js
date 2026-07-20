@@ -8,7 +8,7 @@ export const create_doctor=async_handler( async(req,res)=>{
  });
 
 export const get_all_doctors=async_handler( async (req,res)=>{
-    throw new Error("Testing Global Error Handler");
+
     const doctors=await get_all_doctors_services(req.query);
     return res.status(200).json({success:true,message:"Doctor fetched Successfully",data:doctors})
 });
