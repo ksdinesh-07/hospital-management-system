@@ -6,6 +6,7 @@ import doctor_route from "./routes/doctor.routes.js"
 import patient_route from "./routes/patient.routes.js"
 import appointment_route from "./routes/appointment.routes.js"
 import dashboard_routes from "./routes/dashboard.routes.js"
+import error_handler from "./middleware/error.middleware.js"
 const app=express()
 
 
@@ -38,5 +39,6 @@ app.set("query parser","extended");
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
+app.use(error_handler)
 
 export default app;
