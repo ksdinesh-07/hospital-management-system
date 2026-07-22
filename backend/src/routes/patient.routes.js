@@ -8,7 +8,7 @@ import { patient_validator } from "../validators/patient.validator.js"
 const router=Router()
 
 router.post('/',authenticate_user,authorize_role("admin"),patient_validator,validate_request,create_patient);
-router.get('/',authenticate_user,authorize_role("admin"),get_all_patient);
+router.get('/',authenticate_user,authorize_role("admin","doctor"),get_all_patient);
 router.get('/:id',authenticate_user,authorize_role("admin"),get_patient_by_id);
 router.put('/:id',authenticate_user,authorize_role("admin"),update_patient);
 router.delete('/:id',authenticate_user,authorize_role("admin"),delete_patient);

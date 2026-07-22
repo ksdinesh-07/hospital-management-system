@@ -8,7 +8,7 @@ import {validate_request} from "../middleware/validation.middleware.js"
 const router=Router();
 
 router.post('/',authenticate_user,authorize_role("admin"),doctor_validator,validate_request,create_doctor);
-router.get('/',authenticate_user,authorize_role("admin"),get_all_doctors);
+router.get('/',authenticate_user,authorize_role("admin","doctor"),get_all_doctors);
 router.get('/:id',authenticate_user,authorize_role("admin"),get_doctor_by_id);
 router.put('/:id',authenticate_user,authorize_role("admin"),update_doctor);
 router.delete('/:id',authenticate_user,authorize_role("admin"),delete_doctor);

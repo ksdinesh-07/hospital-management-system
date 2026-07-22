@@ -8,7 +8,7 @@ import { appointment_validator } from "../validators/appointment.validator.js";
 const router=Router();
 
 router.post('/',authenticate_user,appointment_validator,validate_request,create_appointment);
-router.get('/',authenticate_user,authorize_role("admin"),get_all_appointments);
+router.get('/',authenticate_user,authorize_role("admin",'doctor'),get_all_appointments);
 router.get('/:id',authenticate_user,authorize_role("admin"),get_appointment_by_id);
 router.put('/:id',authenticate_user,authorize_role("admin"),update_appointment);
 router.delete('/:id',authenticate_user,authorize_role("admin"),delete_appointment);
