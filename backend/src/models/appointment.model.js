@@ -13,7 +13,8 @@ const appointment_schema=new mongoose.Schema({
   },
   appointment_date:{
     type:Date,
-    required:true
+    required:true,
+    default: Date.now
   },
   appointment_time:{
     type:String,
