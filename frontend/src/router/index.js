@@ -6,6 +6,8 @@ import doctor_view from "../views/DoctorView.vue";
 import patient_view from "../views/PatientView.vue";
 import appointment_view from "../views/AppointmentView.vue";
 import prescription_view from "../views/PrescriptionView.vue";
+import add_doctor_view from '../views/AddDoctorView.vue'
+
 
 const router=createRouter({
   history:createWebHistory(),
@@ -26,8 +28,8 @@ const router=createRouter({
       component:dashboard_view
     },
     {
-      path:'/doctors',
-      name:'doctors',
+      path:'/doctors/:id',
+      name:'doctors-details',
       component:doctor_view
     },
     {
@@ -44,6 +46,11 @@ const router=createRouter({
       path:'/prescription',
       name:'prescription',
       component:prescription_view
+    },
+    {
+      path:'/doctors/add',
+      name:"add-doctor",
+      component:add_doctor_view
     }
   ]
 })

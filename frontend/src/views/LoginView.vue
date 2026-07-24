@@ -26,11 +26,14 @@
 import {ref} from "vue";
 import {login_user} from '../services/auth.service.js'
 import {use_auth_store} from '../stores/auth.store.js'
+import {useRouter} from 'vue-router';
+
 
 
 const auth_store=use_auth_store();
 const email=ref('')
 const password=ref('')
+const router=useRouter()
 
 const login=async ()=>{
   try{
@@ -47,6 +50,7 @@ const login=async ()=>{
 
 
     auth_store.login(response.data.user,response.data.token);
+    router.push('/dashboard');
 
     console.log("c   User after login:", auth_store.user);
     console.log("d   Token after login:", auth_store.token);
